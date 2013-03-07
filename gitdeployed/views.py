@@ -1,5 +1,8 @@
 from pyramid.view import view_config
+from pyramid.renderers import render_to_response
 from pyramid.httpexceptions import HTTPBadRequest
+
+from mako.exceptions import TopLevelLookupException
 
 from .models import (
     DBSession,
@@ -9,6 +12,18 @@ from .models import (
 @view_config(route_name='home', renderer='index.mako')
 def home(request):
     return {}
+
+@view_config(route_name='partial')
+def partial(request):
+    """ Renders and returns the Mako template named ``partial``. """
+
+    partial = request.matchdict['partial']
+    path    = 'gitdeployed:templates/{0}.mako'.format(partial)
+
+    try:
+        return render_to_response(path, {}, request=request)
+    except TopLevelLookupException:
+        return HTTPNotFound()
 
 @view_config(route_name='repos.list', renderer='json')
 def repo_list(request):

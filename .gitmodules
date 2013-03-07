@@ -1,0 +1,3 @@
+[submodule "gitdeployed/static/libs/bootstrap"]
+	path = gitdeployed/static/libs/bootstrap
+	url = git@github.com:twitter/bootstrap.git
