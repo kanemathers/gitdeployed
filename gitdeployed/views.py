@@ -1,35 +1,32 @@
-from pyramid.response import Response
 from pyramid.view import view_config
-
-from sqlalchemy.exc import DBAPIError
+from pyramid.httpexceptions import HTTPBadRequest
 
 from .models import (
     DBSession,
-    MyModel,
-    )
+    Repos,
+)
 
+@view_config(route_name='home', renderer='index.mako')
+def home(request):
+    return {}
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
-def my_view(request):
+@view_config(route_name='repos.list', renderer='json')
+def repo_list(request):
+    """ Returns a list of all the repositories. """
+
+    return {'repositories': Repos.all()}
+
+@view_config(route_name='repos.new', request_method='POST', renderer='json')
+def repo_create(request):
+    """ Create and save a new git repository. """
+
     try:
-        one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
-    except DBAPIError:
-        return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'one': one, 'project': 'gitdeployed'}
+        name        = request.json_body['name']
+        description = request.json_body['description']
+        path        = request.json_body['path']
+        upstream    = request.json_body['upstream']
+    except KeyError:
+        return HTTPBadRequest()
 
-conn_err_msg = """\
-Pyramid is having a problem using your SQL database.  The problem
-might be caused by one of the following things:
-
-1.  You may need to run the "initialize_gitdeployed_db" script
-    to initialize your database tables.  Check your virtual 
-    environment's "bin" directory for this script and try to run it.
-
-2.  Your database server may not be running.  Check that the
-    database server referred to by the "sqlalchemy.url" setting in
-    your "development.ini" file is running.
-
-After you fix the problem, please restart the Pyramid application to
-try it again.
-"""
-
+    repo = Repos(name, description, path)
+    repo.save()
