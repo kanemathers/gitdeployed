@@ -63,3 +63,12 @@ class Repos(Base, BaseMixins):
         self.description = name
         self.path        = name
         self.upstream    = name
+
+    def __json__(self, request):
+        return {
+            'id':          self.id,
+            'name':        self.name,
+            'description': self.description,
+            'path':        self.path,
+            'upstream':    self.upstream,
+        }
