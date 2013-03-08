@@ -23,8 +23,7 @@ def main(global_config, **settings):
     config.add_route('home', '/')
     config.add_route('partial', '/partials/{partial}.html')
 
-    config.add_route('repos.new', '/repos')
-    config.add_route('repos.list', '/repos')
+    config.add_route('repos', '/repos')
 
     bundle_js   = Bundle('js/*.js',
                          filters='rjsmin', output='js/app.min.js', debug=False)

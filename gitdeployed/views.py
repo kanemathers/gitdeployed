@@ -28,13 +28,13 @@ def partial(request):
     except TopLevelLookupException:
         return HTTPNotFound()
 
-@view_config(route_name='repos.list', request_method='GET', renderer='json')
+@view_config(route_name='repos', request_method='GET', renderer='json')
 def repo_list(request):
     """ Returns a list of all the repositories. """
 
     return {'repositories': Repos.all()}
 
-@view_config(route_name='repos.new', request_method='POST', renderer='json')
+@view_config(route_name='repos', request_method='POST', renderer='json')
 def repo_create(request):
     """ Create and save a new git repository. """
 
