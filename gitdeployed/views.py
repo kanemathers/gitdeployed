@@ -46,7 +46,7 @@ def repo_create(request):
     except (KeyError, ValueError):
         return HTTPBadRequest()
 
-    repo = Repos(name, description, path)
+    repo = Repos(name, description, path, upstream)
     repo.save()
 
     return HTTPOk()
