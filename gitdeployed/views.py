@@ -1,6 +1,9 @@
 from pyramid.view import view_config
 from pyramid.renderers import render_to_response
-from pyramid.httpexceptions import HTTPBadRequest
+from pyramid.httpexceptions import (
+    HTTPOk,
+    HTTPBadRequest,
+)
 
 from mako.exceptions import TopLevelLookupException
 
@@ -25,7 +28,7 @@ def partial(request):
     except TopLevelLookupException:
         return HTTPNotFound()
 
-@view_config(route_name='repos.list', renderer='json')
+@view_config(route_name='repos.list', request_method='GET', renderer='json')
 def repo_list(request):
     """ Returns a list of all the repositories. """
 
@@ -40,8 +43,10 @@ def repo_create(request):
         description = request.json_body['description']
         path        = request.json_body['path']
         upstream    = request.json_body['upstream']
-    except KeyError:
+    except (KeyError, ValueError):
         return HTTPBadRequest()
 
     repo = Repos(name, description, path)
     repo.save()
+
+    return HTTPOk()
