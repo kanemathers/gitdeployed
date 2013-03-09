@@ -64,7 +64,7 @@ class RepoViews(object):
             settings  = self.request.registry.settings
             root_path = settings['repos.root_path']
 
-            return tempfile.mkdtemp(dir=root_path)
+            return tempfile.mkdtemp(prefix='', suffix='.git', dir=root_path)
 
         try:
             path     = self.request.json_body['path']
