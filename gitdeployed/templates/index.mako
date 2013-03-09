@@ -28,7 +28,7 @@
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li><a href="#/repos">Repositories</a></li>
-                        <li><a href="#">Config</a></li>
+                        <li><a href="#/config">Config</a></li>
                     </ul>
                 </div>
             </div>

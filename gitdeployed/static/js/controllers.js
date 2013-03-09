@@ -38,4 +38,13 @@ angular.module('gitdeployed.controllers', [
             });
         };
     }
+])
+
+.controller('ConfigCtrl', [
+    '$scope',
+
+    function($scope)
+    {
+        
+    }
 ]);

@@ -14,6 +14,10 @@ angular.module('gitdeployed', [
                 controller:  'ReposCtrl',
                 templateUrl: '/partials/repos.html'
             })
+            .when('/config', {
+                controller:  'ConfigCtrl',
+                templateUrl: '/partials/config.html'
+            })
 
             .otherwise({redirectTo: '/repos'});
     }
