@@ -1,3 +1,7 @@
+import logging
+
+import git
+
 from sqlalchemy import (
     Column,
     Integer,
@@ -12,6 +16,8 @@ from sqlalchemy.orm import (
 )
 
 from zope.sqlalchemy import ZopeTransactionExtension
+
+log = logging.getLogger(__name__)
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base      = declarative_base()
@@ -66,3 +72,20 @@ class Repos(Base, BaseMixins):
             'path':     self.path,
             'upstream': self.upstream,
         }
+
+    def clone(self):
+        """ ``git clone`` the ``upstream`` repository into the ``path``. """
+
+        log.info('Cloning "{0}" into "{1}"'.format(self.upstream, self.path))
+
+        return git.Repo.clone_from(self.upstream, self.path)
+
+    def pull(self):
+        """ ``git pull`` from the upstream repository. """
+
+        log.info('Pulling "{0}" into "{1}"'.format(self.upstream, self.path))
+
+        repo   = git.Repo(self.path)
+        origin = repo.remotes.origin
+
+        return origin.pull()

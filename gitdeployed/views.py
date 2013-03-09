@@ -1,7 +1,10 @@
+import tempfile
+import os.path
+
 from pyramid.view import view_config
 from pyramid.renderers import render_to_response
 from pyramid.httpexceptions import (
-    HTTPOk,
+    HTTPNoContent,
     HTTPBadRequest,
     HTTPNotFound,
 )
@@ -39,13 +42,38 @@ def repo_list(request):
 def repo_create(request):
     """ Create and save a new git repository. """
 
+    def make_path():
+        """ Creates a new directory and returns the path.
+
+        The directory will be created at the root folder specified in the
+        setting ``repos.root_path``.
+        """
+
+        settings  = request.registry.settings
+        root_path = settings['repos.root_path']
+
+        return tempfile.mkdtemp(dir=root_path)
+
     try:
         path     = request.json_body['path']
         upstream = request.json_body['upstream']
     except (KeyError, ValueError):
         return HTTPBadRequest()
 
-    repo = Repos(path, upstream)
-    repo.save()
+    repo = Repos(path or make_path(), upstream)
 
-    return HTTPOk()
+    repo.save()
+    repo.clone()
+
+    return HTTPNoContent()
+
+@view_config(route_name='repos.sync', request_method='POST', renderer='json')
+def repo_sync(request):
+    try:
+        repo = Repos.by_id(request.matchdict['id'])
+    except KeyError:
+        return HTTPBadRequest()
+
+    repo.pull()
+
+    return HTTPNoContent()

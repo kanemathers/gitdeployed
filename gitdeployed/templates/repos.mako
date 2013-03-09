@@ -14,7 +14,7 @@
             <div class="tabs-left">
                 <ul class="nav nav-tabs">
                     <li data-ng-repeat="repo in repos">
-                        <a>{{repo.upstream}}</a>
+                        <a>{{repo.path}}</a>
                     </li>
                 </ul>
             </div>

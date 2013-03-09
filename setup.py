@@ -15,6 +15,7 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
     'pyramid_webassets',
+    'gitpython',
     ]
 
 setup(name='gitdeployed',

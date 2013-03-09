@@ -24,6 +24,7 @@ def main(global_config, **settings):
     config.add_route('partial', '/partials/{partial}.html')
 
     config.add_route('repos', '/repos')
+    config.add_route('repos.sync', '/repos/{id}/sync')
 
     bundle_js   = Bundle('js/*.js',
                          filters='rjsmin', output='js/app.min.js', debug=False)

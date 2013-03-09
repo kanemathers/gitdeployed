@@ -15,11 +15,11 @@ angular.module('gitdeployed.controllers', [
 
         $scope.addRepo = function(fn)
         {
-            if (!this.path || !this.upstream)
+            if (!this.upstream)
                 return false;
 
             var repo = new Repos({
-                path:     this.path,
+                path:     this.path || null,
                 upstream: this.upstream
             });
 
