@@ -32,7 +32,7 @@ def partial(request):
 def repo_list(request):
     """ Returns a list of all the repositories. """
 
-    return {'repositories': Repos.all()}
+    return Repos.all()
 
 @view_config(route_name='repos', request_method='POST', renderer='json')
 def repo_create(request):

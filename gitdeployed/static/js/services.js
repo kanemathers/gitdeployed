@@ -1,9 +1,13 @@
-angular.module('gitdeployed.services', [])
+angular.module('gitdeployed.services', [
+    'ngResource'
+])
 
 .factory('Repos', [
     '$http',
+    '$resource',
 
-    function($http)
+    function($http, $resource)
     {
+        return $resource('/repos/:repoId', {repoId: '@id'});
     }
 ]);

@@ -1,10 +1,13 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
-            sidebar
+            <ul class="nav nav-list">
+                <li data-ng-repeat="repo in repos">
+                    <a title="{{repo.name}}">{{repo.name}}</a>
+                </li>
+            </ul>
         </div>
         <div class="span9">
-            content
         </div>
     </div>
 </div>
