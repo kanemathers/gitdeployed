@@ -13,7 +13,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary disabled">Save</button>
-            <span class="help-inline"><p class="text-error">Not implemented. Edit config file.</p></span>
+            <span class="help-inline">Not implemented. Edit config file.</span>
         </div>
     </form>
 </div>

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="page-header">
-        <button class="pull-right btn btn-primary" data-bs-modal="'partials/new-repo.html'" data-ng-controller="ReposCtrl">Add Repo</button>
+        <button class="pull-right btn btn-primary" data-bs-modal="'partials/new-repo.html'" data-ng-controller="ReposCtrl"><i class="icon-folder-open icon-white"></i> Add Repo</button>
 
         <h1>Repositories</h1>
     </div>
@@ -17,17 +17,17 @@
         </ul>
 
         <div class="tab-content" data-ng-show="activeRepo">
-            <div class="alert alert-info">
+            <div class="alert">
                 <i class="icon-cog icon-white"></i> Set your POST service hook to post to <strong><a data-ng-href="{{'${request.application_url}' + '/repos/' + activeRepo.id + '/sync'}}">{{'${request.application_url}' + '/repos/' + activeRepo.id + '/sync'}}</a></strong>
             </div>
 
             <dl class="dl-horizontal">
-                <dt>POST Hook</dt>
-                <dd>{{'${request.application_url}' + '/repos/' + activeRepo.id + '/sync'}}</dd>
                 <dt>Path</dt>
                 <dd>{{activeRepo.path}}</dd>
                 <dt>Upstream</dt>
                 <dd>{{activeRepo.upstream}}</dd>
+                <dt>POST Hook</dt>
+                <dd>{{'${request.application_url}' + '/repos/' + activeRepo.id + '/sync'}}</dd>
             </dl>
         </div>
     </div>
