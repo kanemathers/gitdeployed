@@ -11,7 +11,14 @@ angular.module('gitdeployed.controllers', [
         Repos.query(function(repos)
         {
             $scope.repos = repos;
+
+            $scope.setActive(repos[0]);
         });
+
+        $scope.setActive = function(repo)
+        {
+            $scope.activeRepo = repo;
+        };
 
         $scope.addRepo = function(fn)
         {
