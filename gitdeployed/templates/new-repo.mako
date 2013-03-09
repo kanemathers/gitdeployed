@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>New Repository</h3>
+    <h3>Add Repository</h3>
 </div>
 
 <form class="form-horizontal" data-ng-submit="addRepo(dismiss)">
