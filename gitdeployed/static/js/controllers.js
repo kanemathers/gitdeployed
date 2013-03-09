@@ -13,18 +13,18 @@ angular.module('gitdeployed.controllers', [
             $scope.repos = repos;
         });
 
-        $scope.addRepo = function(name, description, path, upstream)
+        $scope.addRepo = function(fn)
         {
+            if (!this.path || !this.upstream)
+                return false;
+
             var repo = new Repos({
-                name:        name,
-                description: description,
-                path:        path,
-                upstream:    upstream
+                path:     this.path,
+                upstream: this.upstream
             });
 
             repo.$save();
+            fn();
         };
-
-        //$scope.addRepo('asda', 'my test repo', '/dev/repo', 'git@asdsa.com/asd');
     }
 ]);

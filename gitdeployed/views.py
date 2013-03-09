@@ -3,6 +3,7 @@ from pyramid.renderers import render_to_response
 from pyramid.httpexceptions import (
     HTTPOk,
     HTTPBadRequest,
+    HTTPNotFound,
 )
 
 from mako.exceptions import TopLevelLookupException
@@ -39,14 +40,12 @@ def repo_create(request):
     """ Create and save a new git repository. """
 
     try:
-        name        = request.json_body['name']
-        description = request.json_body['description']
-        path        = request.json_body['path']
-        upstream    = request.json_body['upstream']
+        path     = request.json_body['path']
+        upstream = request.json_body['upstream']
     except (KeyError, ValueError):
         return HTTPBadRequest()
 
-    repo = Repos(name, description, path, upstream)
+    repo = Repos(path, upstream)
     repo.save()
 
     return HTTPOk()

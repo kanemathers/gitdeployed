@@ -52,23 +52,17 @@ class Repos(Base, BaseMixins):
 
     __tablename__ = 'repos'
 
-    id          = Column(Integer, primary_key=True)
-    name        = Column(Text, unique=True)
-    description = Column(Integer)
-    path        = Column(Integer)
-    upstream    = Column(Integer)
+    id       = Column(Integer, primary_key=True)
+    path     = Column(Integer)
+    upstream = Column(Integer)
 
-    def __init__(self, name, description, path, upstream):
-        self.name        = name
-        self.description = name
-        self.path        = name
-        self.upstream    = name
+    def __init__(self, path, upstream):
+        self.path     = path
+        self.upstream = upstream
 
     def __json__(self, request):
         return {
-            'id':          self.id,
-            'name':        self.name,
-            'description': self.description,
-            'path':        self.path,
-            'upstream':    self.upstream,
+            'id':       self.id,
+            'path':     self.path,
+            'upstream': self.upstream,
         }
