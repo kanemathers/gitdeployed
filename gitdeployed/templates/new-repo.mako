@@ -5,6 +5,8 @@
 
 <form class="form-horizontal" data-ng-submit="addRepo(dismiss)">
     <div class="modal-body">
+        <p>Leave the <strong>path</strong> empty and a new directory will be created.</p>
+
         <div class="control-group">
             <label class="control-label" for="upstream">Upstream</label>
             <div class="controls">

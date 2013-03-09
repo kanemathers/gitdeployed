@@ -11,7 +11,7 @@
 
     <div class="tabbable tabs-left">
         <ul class="nav nav-tabs">
-            <li data-ng-repeat="repo in repos" data-ng-class="{active: repo.id == activeRepo.id}">
+            <li data-ng-repeat="repo in repos | orderBy: 'path'" data-ng-class="{active: repo.id == activeRepo.id}">
                 <a data-ng-click="setActive(repo)">{{repo.path}}</a>
             </li>
         </ul>
