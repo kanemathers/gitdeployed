@@ -23,8 +23,12 @@ angular.module('gitdeployed.controllers', [
                 upstream: this.upstream
             });
 
-            repo.$save();
-            fn();
+            repo.$save(function(resp)
+            {
+                // TODO: fix this
+                $scope.repos.push(resp);
+                fn();
+            });
         };
     }
 ]);
