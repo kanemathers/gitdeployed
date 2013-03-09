@@ -1,4 +1,5 @@
 import logging
+import shlex
 
 import git
 
@@ -71,6 +72,7 @@ class Repos(Base, BaseMixins):
             'id':       self.id,
             'path':     self.path,
             'upstream': self.upstream,
+            #'log':      self.log(),
         }
 
     def clone(self):
@@ -89,3 +91,12 @@ class Repos(Base, BaseMixins):
         origin = repo.remotes.origin
 
         return origin.pull()
+
+    def log(self):
+        """ Returns the recent commit log. """
+
+        g   = git.Git(self.path)
+        cmd = '--pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
+        cmd = shlex.split(cmd)
+
+        return g.log(*cmd).split('\n')
