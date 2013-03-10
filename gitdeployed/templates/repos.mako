@@ -29,6 +29,8 @@
                 <dt>POST Hook</dt>
                 <dd>{{'${request.application_url}' + '/repos/' + activeRepo.id + '/sync'}}</dd>
             </dl>
+
+            <button class="btn btn-small pull-right" data-btn-delete="delete(activeRepo)">Delete</button>
         </div>
     </div>
 </div>

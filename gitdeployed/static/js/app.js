@@ -1,6 +1,7 @@
 angular.module('gitdeployed', [
     'gitdeployed.controllers',
     'gitdeployed.services',
+    'gitdeployed.directives',
     '$strap.directives'
 ])
 

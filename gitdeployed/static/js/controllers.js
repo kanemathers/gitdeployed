@@ -19,6 +19,24 @@ angular.module('gitdeployed.controllers', [
         {
             $scope.activeRepo = repo;
         };
+
+        $scope.delete = function(repo)
+        {
+            repo.$delete(function()
+            {
+                for (var i = 0; i < $scope.repos.length; i++)
+                {
+                    if ($scope.repos[i].id != repo.id)
+                        continue;
+
+                    delete $scope.repos[i];
+
+                    break;
+                };
+
+                // TODO: select and set a new activeRepo
+            });
+        };
     }
 ])
 

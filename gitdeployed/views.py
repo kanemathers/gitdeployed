@@ -1,5 +1,6 @@
 import tempfile
 import os.path
+import shutil
 
 from pyramid.view import view_config
 from pyramid.renderers import render_to_response
@@ -50,7 +51,7 @@ class RepoViews(object):
 
         return Repos.by_id(self.request.matchdict['id'])
 
-    @view_config(route_name='repos', request_method='POST', renderer='json')
+    @view_config(route_name='repos', request_method='POST')
     def new(self):
         """ Create and save a new git repository. """
 
@@ -80,8 +81,7 @@ class RepoViews(object):
         return HTTPFound(location=self.request.route_path('repos.get',
                                                           id=repo.id))
 
-    @view_config(route_name='repos.sync', request_method='POST',
-                 renderer='json')
+    @view_config(route_name='repos.sync', request_method='POST')
     def sync(request):
         """ Syncs the local repository with upstream.
 
@@ -94,5 +94,25 @@ class RepoViews(object):
             return HTTPBadRequest()
 
         repo.pull()
+
+        return HTTPNoContent()
+
+    @view_config(route_name='repos.get', request_method='DELETE')
+    def delete(self):
+        """ Delete the repository with the specified ``id``.
+
+        If ``hdd`` is True, the repository itself will also be removed.
+        This may fail due to permissions errors, however.
+        """
+
+        try:
+            repo = Repos.by_id(self.request.matchdict['id'])
+        except KeyError:
+            return HTTPBadRequest()
+
+        repo.delete()
+
+        if self.request.GET.get('hdd', False):
+            shutil.rmtree(repo.path)
 
         return HTTPNoContent()
