@@ -29,7 +29,7 @@ angular.module('gitdeployed.controllers', [
                     if ($scope.repos[i].id != repo.id)
                         continue;
 
-                    delete $scope.repos[i];
+                    $scope.repos.splice(i, 1);
 
                     break;
                 };
