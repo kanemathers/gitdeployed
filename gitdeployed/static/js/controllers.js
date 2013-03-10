@@ -2,7 +2,7 @@ angular.module('gitdeployed.controllers', [
     'gitdeployed.services'
 ])
 
-.controller('ReposCtrl', [
+.controller('ReposListCtrl', [
     '$scope',
     'Repos',
 
@@ -19,7 +19,15 @@ angular.module('gitdeployed.controllers', [
         {
             $scope.activeRepo = repo;
         };
+    }
+])
 
+.controller('ReposNewCtrl', [
+    '$scope',
+    'Repos',
+
+    function($scope, Repos)
+    {
         $scope.addRepo = function(fn)
         {
             if (!this.upstream)
@@ -32,8 +40,8 @@ angular.module('gitdeployed.controllers', [
 
             repo.$save(function(resp)
             {
-                // TODO: fix this
-                $scope.repos.push(resp);
+                // TODO: need to push this to ``ReposListCtrl.repos`` and
+                // set it as active
                 fn();
             });
         };

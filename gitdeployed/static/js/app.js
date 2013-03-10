@@ -11,7 +11,7 @@ angular.module('gitdeployed', [
     {
         $routeProvider
             .when('/repos', {
-                controller:  'ReposCtrl',
+                controller:  'ReposListCtrl',
                 templateUrl: '/partials/repos.html'
             })
             .when('/config', {

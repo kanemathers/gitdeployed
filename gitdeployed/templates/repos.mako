@@ -1,6 +1,6 @@
 <div class="container">
     <div class="page-header">
-        <button class="pull-right btn btn-primary" data-bs-modal="'partials/new-repo.html'" data-ng-controller="ReposCtrl"><i class="icon-folder-open icon-white"></i> Add Repo</button>
+        <button class="pull-right btn btn-primary" data-bs-modal="'partials/new-repo.html'" data-ng-controller="ReposNewCtrl"><i class="icon-folder-open icon-white"></i> Add Repo</button>
 
         <h1>Repositories</h1>
     </div>
