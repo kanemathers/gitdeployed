@@ -8,13 +8,6 @@ angular.module('gitdeployed.controllers', [
 
     function($scope, Repos)
     {
-        Repos.query(function(repos)
-        {
-            $scope.repos = repos;
-
-            $scope.setActive(repos[0]);
-        });
-
         $scope.setActive = function(repo)
         {
             $scope.activeRepo = repo;
@@ -39,6 +32,19 @@ angular.module('gitdeployed.controllers', [
 
             $scope.activeRepo = null;
         };
+
+        $scope.$on('repos.new', function(event, repo)
+        {
+            $scope.repos.push(repo);
+            $scope.setActive(repo);
+        });
+
+        Repos.query(function(repos)
+        {
+            $scope.repos = repos;
+
+            $scope.setActive(repos[0]);
+        });
     }
 ])
 
@@ -60,8 +66,7 @@ angular.module('gitdeployed.controllers', [
 
             repo.$save(function(resp)
             {
-                // TODO: need to push this to ``ReposListCtrl.repos`` and
-                // set it as active
+                $scope.$emit('repos.new', resp);
                 fn();
             });
         };
