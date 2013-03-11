@@ -34,8 +34,8 @@ def create_user(email):
         Users(email, password).save()
 
 def main(argv=sys.argv):
-    desc   = ('Centralised interface to manage your servers incoming git POST '
-              'service hooks.')
+    desc   = ('gitdeployed allows you to easily setup the end points for all '
+              'your POST service hooks.')
     parser = argparse.ArgumentParser(description=desc)
 
     parser.add_argument('-i', '--init-db', action='store_true',
