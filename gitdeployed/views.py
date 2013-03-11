@@ -82,7 +82,7 @@ class RepoViews(object):
                                                           id=repo.id))
 
     @view_config(route_name='repos.sync', request_method='POST')
-    def sync(request):
+    def sync(self):
         """ Syncs the local repository with upstream.
 
         ``git pull origin master``, esentially.
