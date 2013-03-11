@@ -27,9 +27,9 @@ Install gitdeployed:
     $ cd gitdeployed
     $ python setup.py install
 
-Run it:
+Create a user account and start the service:
 
-    $ gitdeployed -i [config.ini]
+    $ gitdeployed -i -e "my@emailaddress.com" [config.ini]
 
 See ``pirateguide --help`` for more options.
 
