@@ -2,6 +2,7 @@ import os
 import sys
 import transaction
 import argparse
+import getpass
 
 from sqlalchemy import engine_from_config
 
@@ -16,12 +17,21 @@ from pyramid.paster import (
 from ..models import (
     DBSession,
     Base,
+    Users,
 )
 
 def init_db(engine):
     """ Initialize the database. """
 
     Base.metadata.create_all(engine)
+
+def create_user(email):
+    """ Creates a new user with the ``email`` and ``password``. """
+
+    password = getpass.getpass('Password for {0}: '.format(email))
+
+    with transaction.manager:
+        Users(email, password).save()
 
 def main(argv=sys.argv):
     desc   = ('Centralised interface to manage your servers incoming git POST '
@@ -30,6 +40,8 @@ def main(argv=sys.argv):
 
     parser.add_argument('-i', '--init-db', action='store_true',
                         default=False, help='initialize the database')
+    parser.add_argument('-e', '--email', nargs=1,
+                        help='setup a new user account')
     parser.add_argument('config', help='path to the config file')
 
     args = parser.parse_args()
@@ -44,6 +56,9 @@ def main(argv=sys.argv):
 
     if args.init_db:
         init_db(engine)
+
+    if args.email:
+        create_user(args.email[0])
 
     app = loadapp('config:{0}'.format(config_uri), relative_to='.')
     serve(app, host='0.0.0.0', port=6543)

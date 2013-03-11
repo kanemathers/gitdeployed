@@ -16,6 +16,7 @@ requires = [
     'waitress',
     'pyramid_webassets',
     'gitpython',
+    'py-bcrypt',
     ]
 
 setup(name='gitdeployed',

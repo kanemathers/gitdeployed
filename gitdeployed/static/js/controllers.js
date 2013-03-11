@@ -2,6 +2,40 @@ angular.module('gitdeployed.controllers', [
     'gitdeployed.services'
 ])
 
+.controller('LoginCtrl', [
+    '$scope',
+    '$http',
+
+    function($scope, $http)
+    {
+        $scope.authed = true;
+
+        $scope.login = function()
+        {
+            $http.post('/login', {
+                email:    this.email,
+                password: this.password
+            })
+            .success(function(user)
+            {
+                $scope.authed = true;
+                $scope.error  = '';
+
+                $scope.$emit('auth:success', user);
+            })
+            .error(function(resp)
+            {
+                $scope.error = 'Invalid Login';
+            });
+        };
+
+        $scope.$on('auth:required', function()
+        {
+            $scope.authed = false;
+        });
+    }
+])
+
 .controller('ReposListCtrl', [
     '$scope',
     'Repos',

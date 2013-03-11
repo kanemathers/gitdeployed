@@ -2,7 +2,11 @@ import tempfile
 import os.path
 import shutil
 
-from pyramid.view import view_config
+from pyramid.view import (
+    view_config,
+    view_defaults,
+)
+
 from pyramid.renderers import render_to_response
 from pyramid.httpexceptions import (
     HTTPNoContent,
@@ -11,10 +15,16 @@ from pyramid.httpexceptions import (
     HTTPFound,
 )
 
+from pyramid.security import (
+    remember,
+    forget,
+)
+
 from mako.exceptions import TopLevelLookupException
 
 from .models import (
     DBSession,
+    Users,
     Repos,
 )
 
@@ -34,6 +44,36 @@ def partial(request):
     except TopLevelLookupException:
         return HTTPNotFound()
 
+class UserViews(object):
+
+    def __init__(self, request):
+        self.request = request
+
+    @view_config(route_name='user.login', request_method='POST',
+                 renderer='json')
+    def login(self):
+        """ Authenticate the user. """
+
+        email    = self.request.json_body.get('email')
+        password = self.request.json_body.get('password')
+
+        user = Users.by_email(email)
+
+        if not user or not user.check_password(password):
+            return HTTPBadRequest()
+
+        self.request.response.headerlist += remember(self.request, user.id)
+
+        return {'user': user}
+
+    @view_config(route_name='user.logout', request_method='GET')
+    def logout(self):
+        """ Destroy the users session. """
+
+        return HTTPFound(location=self.request.route_path('home'),
+                         headers=forget(self.request))
+
+@view_defaults(permission='view')
 class RepoViews(object):
 
     def __init__(self, request):

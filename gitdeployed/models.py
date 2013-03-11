@@ -1,12 +1,16 @@
 import logging
 import shlex
+import datetime
 
 import git
+import bcrypt
 
 from sqlalchemy import (
     Column,
     Integer,
     Text,
+    Unicode,
+    DateTime,
 )
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -54,6 +58,45 @@ class BaseMixins(object):
         """ Deletes the object from the database. """
 
         DBSession.delete(self)
+
+class Users(Base, BaseMixins):
+
+    __tablename__ = 'users'
+
+    id       = Column(Integer, primary_key=True)
+    email    = Column(Unicode(255), unique=True, index=True)
+    password = Column(Unicode(100))
+    created  = Column(DateTime, default=datetime.datetime.now)
+
+    def __init__(self, email, password):
+        self.email    = email
+        self.password = self.hash_password(password)
+
+    def __json__(self, request):
+        return {
+            'id':      self.id,
+            'email':   self.email,
+            'created': self.created,
+        }
+
+    @classmethod
+    def by_email(cls, email):
+        """ Returns the user object with the specified ``email``. """
+
+        return DBSession.query(cls).filter(cls.email == email).one()
+
+    def check_password(self, password):
+        """ Checks if the supplied ``password`` matches the users saved
+        password.
+        """
+
+        return bcrypt.hashpw(password, self.password) == self.password
+
+    @staticmethod
+    def hash_password(password):
+        """ Hashes the ``password`` and returns the string. """
+
+        return bcrypt.hashpw(password, bcrypt.gensalt())
 
 class Repos(Base, BaseMixins):
 
