@@ -25,6 +25,8 @@ Install gitdeployed:
 
     $ git clone git://github.com/kanemathers/gitdeployed.git
     $ cd gitdeployed
+    $ git submodule init
+    $ git submodule update
     $ python setup.py install
 
 Create a user account and start the service:
