@@ -1,4 +1,6 @@
 import datetime
+import string
+import random
 
 from pyramid.config import Configurator
 from pyramid.authentication import AuthTktAuthenticationPolicy
@@ -16,6 +18,14 @@ from .models import (
 
 from .factories import ReposFactory
 
+def generate_secret():
+    """ Returns a randomly generated string for use in signing/hashing the
+    cookies.
+    """
+
+    return ''.join(random.choice(string.letters + string.digits)
+                   for i in xrange(20))
+
 def patch_json_renderer():
     """ Returns a patched JSON renderer capable of serializing custom
     objects.
@@ -32,7 +42,8 @@ def patch_json_renderer():
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application. """
 
-    authn_policy = AuthTktAuthenticationPolicy(settings['auth.secret'])
+    authn_policy = AuthTktAuthenticationPolicy(settings.get('auth.secret',
+                                                            generate_secret()))
     authz_policy = ACLAuthorizationPolicy()
 
     engine = engine_from_config(settings, 'sqlalchemy.')
