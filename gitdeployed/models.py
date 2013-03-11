@@ -11,6 +11,7 @@ from sqlalchemy import (
     Text,
     Unicode,
     DateTime,
+    BINARY,
 )
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -65,7 +66,7 @@ class Users(Base, BaseMixins):
 
     id       = Column(Integer, primary_key=True)
     email    = Column(Unicode(255), unique=True, index=True)
-    password = Column(Unicode(100))
+    password = Column(BINARY(60))
     created  = Column(DateTime, default=datetime.datetime.now)
 
     def __init__(self, email, password):
