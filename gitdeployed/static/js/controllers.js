@@ -34,8 +34,10 @@ angular.module('gitdeployed.controllers', [
                     break;
                 };
 
-                // TODO: select and set a new activeRepo
+                $scope.setActive($scope.repos[0]);
             });
+
+            $scope.activeRepo = null;
         };
     }
 ])
