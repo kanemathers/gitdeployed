@@ -17,7 +17,7 @@
         </ul>
 
         <div class="tab-content" data-ng-show="activeRepo">
-            <div class="alert">
+            <div class="alert alert-info">
                 <i class="icon-cog icon-white"></i> Set your POST service hook to post to <strong><a data-ng-href="{{'${request.application_url}' + '/repos/' + activeRepo.id + '/sync'}}">{{'${request.application_url}' + '/repos/' + activeRepo.id + '/sync'}}</a></strong>
             </div>
 
