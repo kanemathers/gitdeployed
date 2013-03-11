@@ -41,6 +41,6 @@ setup(name='gitdeployed',
       [paste.app_factory]
       main = gitdeployed:main
       [console_scripts]
-      initialize_gitdeployed_db = gitdeployed.scripts.initializedb:main
+      gitdeployed = gitdeployed.scripts.gitdeployed:main
       """,
       )
