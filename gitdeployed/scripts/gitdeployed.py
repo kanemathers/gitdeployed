@@ -29,6 +29,12 @@ def create_user(email):
     """ Creates a new user with the ``email`` and ``password``. """
 
     password = getpass.getpass('Password for {0}: '.format(email))
+    confirm  = getpass.getpass('Again: ')
+
+    if password != confirm:
+        print >> sys.stderr, "Passwords don't match"
+
+        sys.exit(1)
 
     with transaction.manager:
         Users(email, password).save()
