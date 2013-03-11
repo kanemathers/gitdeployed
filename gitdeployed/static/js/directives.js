@@ -1,14 +1,20 @@
 angular.module('gitdeployed.directives', [])
 
 .directive('btnDelete', [
+    '$q',
     '$timeout',
 
-    function($timeout)
+    function($q, $timeout)
     {
         var tickText = function(total)
         {
-            return function()
+            var t = total;
+
+            return function(reset)
             {
+                if (reset)
+                    total = t;
+
                 return (!total) ? 'Delete' :  'Really? (' + total-- + ')';
             };
         };
@@ -20,59 +26,68 @@ angular.module('gitdeployed.directives', [])
             },
             link: function(scope, element, attrs)
             {
-                var ticks   = 3;
-                var btnText = tickText(ticks);
-                var ticker  = null;
-
-                var tick = function()
+                var confirm = function()
                 {
-                    element.text(btnText());
+                    var deferred = $q.defer();
+                    var ticks    = 3
+                    var btnText  = tickText(ticks);
+                    var timer    = {
+                        confirm: null,
+                        pending: null
+                    };
 
-                    if (!--ticks)
+                    var clickFn = function()
                     {
-                        clearInterval(ticker);
-                        activateDelete();
-                    }
-                };
+                        clearTimeout(timer.pending);
 
-                var deleteCallback = function()
-                {
-                    resetBtn();
-                    scope.btnDelete();
-                };
+                        element
+                            .unbind('click.tmp')
+                            .removeClass('btn-danger');
 
-                var activateDelete = function()
-                {
-                    $timeout(resetBtn, 5000);
+                        scope.$apply(deferred.resolve);
+                    };
+
+                    var tick = function()
+                    {
+                        element.text(btnText());
+
+                        if (--ticks !== 0)
+                            return;
+
+                        clearInterval(timer.confirm);
+
+                        element
+                            .removeClass('disabled')
+                            .bind('click.tmp', clickFn);
+
+                        timer.pending = setTimeout(function()
+                        {
+                            element
+                                .unbind('click.tmp')
+                                .removeClass('btn-danger');
+
+                            scope.$apply(deferred.reject);
+                        }, 5000);
+                    };
 
                     element
-                        .removeClass('disabled')
-                        .click(deleteCallback);
-                };
+                        .addClass('disabled btn-danger')
+                        .text(btnText(true));
 
-                var resetBtn = function()
-                {
-                    ticks   = 3;
-                    btnText = tickText(ticks);
+                    timer.confirm = setInterval(tick, 1000);
 
-                    element
-                        .removeClass('btn-danger')
-                        .text('Delete')
-                        .unbind('click', deleteCallback);
-
-                    clearInterval(ticker);
+                    return deferred.promise;
                 };
 
                 element.click(function()
                 {
-                    element
-                        .addClass('btn-danger disabled')
-                        .text(btnText());
+                    if (element.hasClass('btn-danger'))
+                        return;
 
-                    ticker = setInterval(function()
+                    confirm().then(function()
                     {
-                        scope.$apply(tick);
-                    }, 1000);
+                        scope.btnDelete();
+                    });
                 });
             }
         };
