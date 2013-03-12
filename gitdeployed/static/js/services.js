@@ -3,10 +3,9 @@ angular.module('gitdeployed.services', [
 ])
 
 .factory('Repos', [
-    '$http',
     '$resource',
 
-    function($http, $resource)
+    function($resource)
     {
         return $resource('/repos/:repoId', {repoId: '@id'});
     }

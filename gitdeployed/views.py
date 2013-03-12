@@ -110,10 +110,9 @@ class RepoViews(object):
         try:
             path     = self.request.json_body['path']
             upstream = self.request.json_body['upstream']
+            repo     = Repos(path or make_path(), upstream)
         except (KeyError, ValueError):
             return HTTPBadRequest()
-
-        repo = Repos(path or make_path(), upstream)
 
         repo.save(flush=True)
         repo.clone()

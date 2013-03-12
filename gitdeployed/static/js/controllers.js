@@ -47,7 +47,7 @@ angular.module('gitdeployed.controllers', [
             $scope.activeRepo = repo;
         };
 
-        $scope.delete = function(repo)
+        $scope.deleteRepo = function(repo)
         {
             repo.$delete(function()
             {

@@ -26,7 +26,9 @@ def init_db(engine):
     Base.metadata.create_all(engine)
 
 def create_user(email):
-    """ Creates a new user with the ``email`` and ``password``. """
+    """ Creates a new user with the ``email``. You will be prompted to
+    enter a password via stdin.
+    """
 
     password = getpass.getpass('Password for {0}: '.format(email))
     confirm  = getpass.getpass('Again: ')

@@ -42,9 +42,9 @@ def patch_json_renderer():
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application. """
 
+    authz_policy = ACLAuthorizationPolicy()
     authn_policy = AuthTktAuthenticationPolicy(settings.get('auth.secret',
                                                             generate_secret()))
-    authz_policy = ACLAuthorizationPolicy()
 
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)

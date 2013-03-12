@@ -72,18 +72,12 @@ angular.module('gitdeployed', [
 
         var retry = function(request)
         {
-            $http(request.config).then(function(response)
-            {
-                request.deferred.resolve(response);
-            });
+            $http(request.config).then(request.deferred.resolve);
         };
 
         $rootScope.$on('auth:success', function()
         {
-            angular.forEach($rootScope.requestQueue, function(request)
-            {
-                retry(request);
-            });
+            angular.forEach($rootScope.requestQueue, retry);
         });
     }
 ]);

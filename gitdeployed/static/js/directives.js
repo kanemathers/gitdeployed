@@ -8,13 +8,8 @@ angular.module('gitdeployed.directives', [])
     {
         var tickText = function(total)
         {
-            var t = total;
-
-            return function(reset)
+            return function()
             {
-                if (reset)
-                    total = t;
-
                 return (!total) ? 'Delete' :  'Really? (' + total-- + ')';
             };
         };
@@ -72,7 +67,7 @@ angular.module('gitdeployed.directives', [])
 
                     element
                         .addClass('disabled btn-danger')
-                        .text(btnText(true));
+                        .text(btnText());
 
                     timer.confirm = setInterval(tick, 1000);
 

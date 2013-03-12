@@ -116,7 +116,6 @@ class Repos(Base, BaseMixins):
             'id':       self.id,
             'path':     self.path,
             'upstream': self.upstream,
-            #'log':      self.log(),
         }
 
     def clone(self):

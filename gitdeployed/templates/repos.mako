@@ -30,7 +30,7 @@
                 <dd>{{'${request.application_url}' + '/repos/' + activeRepo.id + '/sync'}}</dd>
             </dl>
 
-            <button class="btn btn-small pull-right" data-btn-delete="delete(activeRepo)">Delete</button>
+            <button class="btn btn-small pull-right" data-btn-delete="deleteRepo(activeRepo)">Delete</button>
         </div>
     </div>
 </div>
