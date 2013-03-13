@@ -40,9 +40,3 @@ Configuring
 
 ``repos.root_path`` - If set, repositories added without a path specified
 will be saved into a new folder within the root path.
-
-Dependencies
-------------
-
-You'll need the [less](http://lesscss.org/) binary in your ``$PATH``. That,
-or the full path specified in the setting ``webassets.less_bin``.

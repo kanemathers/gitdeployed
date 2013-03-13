@@ -7,13 +7,11 @@
     <meta name="description" content="">
     <meta name="author" content="Kane Mathers">
 
-    % for url in request.webassets_env['less'].urls():
-    <link href="${url}" rel="stylesheet">
-    % endfor
-
     <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <link href="${request.static_url('gitdeployed:static/css/app.min.css')}" rel="stylesheet">
 </head>
 <body data-ng-controller="LoginCtrl">
     <div data-ng-show="authed">
@@ -58,8 +56,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.6.6/angular-strap.min.js"></script>
 
-    % for url in request.webassets_env['js'].urls():
-    <script src="${url}"></script>
-    % endfor
+    <script src="${request.static_url('gitdeployed:static/js/app.min.js')}"></script>
 </body>
 </html>

@@ -9,8 +9,6 @@ from pyramid.renderers import JSON
 
 from sqlalchemy import engine_from_config
 
-from webassets import Bundle
-
 from .models import (
     DBSession,
     Base,
@@ -67,14 +65,6 @@ def main(global_config, **settings):
     config.add_route('repos', '/repos', factory=ReposFactory)
     config.add_route('repos.get', '/repos/{id}', factory=ReposFactory)
     config.add_route('repos.sync', '/repos/{id}/sync', factory=ReposFactory)
-
-    bundle_js   = Bundle('js/*.js',
-                         filters='rjsmin', output='js/app.min.js', debug=False)
-    bundle_less = Bundle('css/app.less',
-                         filters='less', output='css/app.min.css', debug=False)
-
-    config.add_webasset('js', bundle_js)
-    config.add_webasset('less', bundle_less)
 
     config.scan()
 
