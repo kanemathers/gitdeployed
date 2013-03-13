@@ -43,8 +43,8 @@
         <form class="form-signin" data-ng-submit="login()">
             <h2 class="form-signin-heading">Login Required</h2>
 
-            <input type="text" class="input-block-level" placeholder="Email Address" data-ng-model="email">
-            <input type="password" class="input-block-level" placeholder="Password" data-ng-model="password">
+            <input type="email" class="input-block-level" placeholder="Email Address" required data-ng-model="email">
+            <input type="password" class="input-block-level" placeholder="Password" required data-ng-model="password">
 
             <p class="pull-right">{{error}}</p>
 

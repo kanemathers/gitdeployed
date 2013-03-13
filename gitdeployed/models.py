@@ -84,7 +84,7 @@ class Users(Base, BaseMixins):
     def by_email(cls, email):
         """ Returns the user object with the specified ``email``. """
 
-        return DBSession.query(cls).filter(cls.email == email).one()
+        return DBSession.query(cls).filter(cls.email == email).first()
 
     def check_password(self, password):
         """ Checks if the supplied ``password`` matches the users saved

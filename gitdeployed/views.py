@@ -60,7 +60,7 @@ class UserViews(object):
         user = Users.by_email(email)
 
         if not user or not user.check_password(password):
-            return HTTPBadRequest()
+            return HTTPBadRequest(body='Invalid username or password')
 
         self.request.response.headerlist += remember(self.request, user.id)
 
@@ -108,12 +108,12 @@ class RepoViews(object):
             return tempfile.mkdtemp(prefix='', suffix='.git', dir=root_path)
 
         try:
-            path     = self.request.json_body['path']
+            path     = self.request.json_body.get('path', make_path())
             upstream = self.request.json_body['upstream']
-            repo     = Repos(path or make_path(), upstream)
         except (KeyError, ValueError):
-            return HTTPBadRequest()
+            return HTTPBadRequest(body='Invalid path or upstream')
 
+        repo = Repos(path, upstream)
         repo.save(flush=True)
         repo.clone()
 
@@ -147,7 +147,7 @@ class RepoViews(object):
         try:
             repo = Repos.by_id(self.request.matchdict['id'])
         except KeyError:
-            return HTTPBadRequest()
+            return HTTPNotFound()
 
         repo.delete()
 

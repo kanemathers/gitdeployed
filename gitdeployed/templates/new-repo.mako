@@ -10,7 +10,7 @@
         <div class="control-group">
             <label class="control-label" for="upstream">Upstream</label>
             <div class="controls">
-                <input type="text" id="upstream" placeholder="Upstream" data-ng-model="upstream">
+                <input type="text" id="upstream" placeholder="Upstream" required data-ng-model="upstream">
             </div>
         </div>
         <div class="control-group">
@@ -22,6 +22,8 @@
     </div>
 
     <div class="modal-footer">
+        <p class="pull-left" data-ng-show="error">{{error}}</p>
+
         <button type="button" class="btn" ng-click="dismiss()">Close</button>
         <button class="btn btn-primary" type="submit">Add</button>
     </div>

@@ -25,7 +25,7 @@ angular.module('gitdeployed.controllers', [
             })
             .error(function(resp)
             {
-                $scope.error = 'Invalid Login';
+                $scope.error = resp;
             });
         };
 
@@ -100,8 +100,14 @@ angular.module('gitdeployed.controllers', [
 
             repo.$save(function(resp)
             {
+                $scope.error = null;
+
                 $scope.$emit('repos.new', resp);
                 fn();
+            },
+            function(resp)
+            {
+                $scope.error = resp.data;
             });
         };
     }
