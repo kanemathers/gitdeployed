@@ -6,8 +6,7 @@ import getpass
 
 from sqlalchemy import engine_from_config
 
-from paste.deploy import loadapp
-from waitress import serve
+from pyramid.scripts import pserve
 
 from pyramid.paster import (
     get_appsettings,
@@ -68,5 +67,4 @@ def main(argv=sys.argv):
     if args.email:
         create_user(args.email[0])
 
-    app = loadapp('config:{0}'.format(config_uri), relative_to='.')
-    serve(app, host='0.0.0.0', port=6543)
+    return pserve.PServeCommand([None, config_uri]).run()
