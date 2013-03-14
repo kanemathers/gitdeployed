@@ -47,6 +47,8 @@ def main(argv=sys.argv):
 
     parser.add_argument('-i', '--init-db', action='store_true',
                         default=False, help='initialize the database')
+    parser.add_argument('-n', '--no-serve', action='store_true',
+                        default=False, help="don't enable the web server")
     parser.add_argument('-e', '--email', nargs=1,
                         help='setup a new user account')
     parser.add_argument('config', help='path to the config file')
@@ -67,4 +69,5 @@ def main(argv=sys.argv):
     if args.email:
         create_user(args.email[0])
 
-    return pserve.PServeCommand([None, config_uri]).run()
+    if not args.no_serve:
+        pserve.PServeCommand([None, config_uri]).run()
