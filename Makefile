@@ -2,7 +2,7 @@ JS     	= $(filter-out gitdeployed/static/js/app.min.js, \
 		  $(wildcard gitdeployed/static/js/*.js))
 JS_MIN 	= gitdeployed/static/js/app.min.js
 LESS   	= gitdeployed/static/css/app.less
-CSS    	= $(LESS:.less=.min.css)
+CSS    	= gitdeployed/static/css/app.min.css
 
 all: less js
 
