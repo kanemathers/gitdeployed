@@ -108,9 +108,9 @@ class RepoViews(object):
             return tempfile.mkdtemp(prefix='', suffix='.git', dir=root_path)
 
         try:
-            path     = self.request.json_body.get('path', make_path())
+            path     = self.request.json_body.get('path') or make_path()
             upstream = self.request.json_body['upstream']
-        except (KeyError, ValueError):
+        except KeyError:
             return HTTPBadRequest(body='Invalid path or upstream')
 
         repo = Repos(path, upstream)
