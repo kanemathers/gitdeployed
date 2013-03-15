@@ -120,7 +120,8 @@ class RepoViews(object):
         return HTTPFound(location=self.request.route_path('repos.get',
                                                           id=repo.id))
 
-    @view_config(route_name='repos.sync', request_method='POST')
+    @view_config(route_name='repos.sync', request_method='POST',
+                 permission=None)
     def sync(self):
         """ Syncs the local repository with upstream.
 
