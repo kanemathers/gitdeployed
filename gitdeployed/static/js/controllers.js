@@ -13,7 +13,7 @@ angular.module('gitdeployed.controllers', [
         $scope.login = function()
         {
             $http.post('/login', {
-                email:    this.email,
+                username: this.username,
                 password: this.password
             })
             .success(function(user)

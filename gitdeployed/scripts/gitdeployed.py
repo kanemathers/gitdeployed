@@ -24,12 +24,12 @@ def init_db(engine):
 
     Base.metadata.create_all(engine)
 
-def create_user(email):
-    """ Creates a new user with the ``email``. You will be prompted to
+def create_user(username):
+    """ Creates a new user with the ``username``. You will be prompted to
     enter a password via stdin.
     """
 
-    password = getpass.getpass('Password for {0}: '.format(email))
+    password = getpass.getpass('Password for {0}: '.format(username))
     confirm  = getpass.getpass('Again: ')
 
     if password != confirm:
@@ -38,7 +38,7 @@ def create_user(email):
         sys.exit(1)
 
     with transaction.manager:
-        Users(email, password).save()
+        Users(username, password).save()
 
 def main(argv=sys.argv):
     desc   = ('gitdeployed allows you to easily setup the end points for all '
@@ -49,7 +49,7 @@ def main(argv=sys.argv):
                         default=False, help='initialize the database')
     parser.add_argument('-n', '--no-serve', action='store_true',
                         default=False, help="don't enable the web server")
-    parser.add_argument('-e', '--email', nargs=1,
+    parser.add_argument('-u', '--username', nargs=1,
                         help='setup a new user account')
     parser.add_argument('config', help='path to the config file')
 
@@ -66,8 +66,8 @@ def main(argv=sys.argv):
     if args.init_db:
         init_db(engine)
 
-    if args.email:
-        create_user(args.email[0])
+    if args.username:
+        create_user(args.username[0])
 
     if not args.no_serve:
         pserve.PServeCommand([None, config_uri]).run()

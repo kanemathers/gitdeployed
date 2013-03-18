@@ -31,7 +31,7 @@ Install gitdeployed:
 
 Create a user account and start the service:
 
-    $ gitdeployed -i -e "my@emailaddress.com" [config.ini]
+    $ gitdeployed -i -u kane [config.ini]
 
 See ``pirateguide --help`` for more options.
 

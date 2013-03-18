@@ -65,26 +65,26 @@ class Users(Base, BaseMixins):
     __tablename__ = 'users'
 
     id       = Column(Integer, primary_key=True)
-    email    = Column(Unicode(255), unique=True, index=True)
+    username = Column(Unicode(255), unique=True, index=True)
     password = Column(BINARY(60))
     created  = Column(DateTime, default=datetime.datetime.now)
 
-    def __init__(self, email, password):
-        self.email    = email
+    def __init__(self, username, password):
+        self.username = username
         self.password = self.hash_password(password)
 
     def __json__(self, request):
         return {
-            'id':      self.id,
-            'email':   self.email,
-            'created': self.created,
+            'id':       self.id,
+            'username': self.username,
+            'created':  self.created,
         }
 
     @classmethod
-    def by_email(cls, email):
-        """ Returns the user object with the specified ``email``. """
+    def by_username(cls, username):
+        """ Returns the user object with the specified ``username``. """
 
-        return DBSession.query(cls).filter(cls.email == email).first()
+        return DBSession.query(cls).filter(cls.username == username).first()
 
     def check_password(self, password):
         """ Checks if the supplied ``password`` matches the users saved

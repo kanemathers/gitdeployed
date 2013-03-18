@@ -54,10 +54,10 @@ class UserViews(object):
     def login(self):
         """ Authenticate the user. """
 
-        email    = self.request.json_body.get('email')
+        username = self.request.json_body.get('username')
         password = self.request.json_body.get('password')
 
-        user = Users.by_email(email)
+        user = Users.by_username(username)
 
         if not user or not user.check_password(password):
             return HTTPBadRequest(body='Invalid username or password')
